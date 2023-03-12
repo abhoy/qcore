@@ -1,3 +1,3 @@
-# QCORE Package
+# qcore
 
-This is a QCORE Quantum Core Library package. 
+QCORE: Quantum Core Library
