@@ -1,3 +1,3 @@
 # qcore
 
-QCORE: Quantum Core Library
+QCORE: Core Quantum Library
