@@ -5,7 +5,7 @@ QCORE: Core Quantum Library
 
 ### For use in a C++ Project
 
-   git submodule add <<QCORE Library URL>>
+    git submodule add <<QCORE Library URL>>
 
 
 ### For use in Python Environment
