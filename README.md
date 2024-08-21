@@ -21,7 +21,7 @@ QCORE: Core Quantum Library
     3. Install the following packages 
         pip install cmake ninja setuptools setuptools_scm 
 
-    4. Install the QMapping tool
+    4. Install the QCORE tool
         python3 setup.py  install
 
     5. Run Python Interpreter
