@@ -13,13 +13,13 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/extern/json" "extern/json" EXCLUDE_FROM_
 # main project library
 add_library(
   ${PROJECT_NAME} SHARED
-  ${PROJECT_SOURCE_DIR}/include/definition.hpp
-  ${PROJECT_SOURCE_DIR}/include/gatetype.hpp
-  ${PROJECT_SOURCE_DIR}/include/qgate.hpp
-  ${PROJECT_SOURCE_DIR}/include/qcircuit.hpp
-  qcircuit.cpp
-  qgate.cpp
-  parsers/parseQASM.cpp
+  ${PROJECT_SOURCE_DIR}/include/Definition.hpp
+  ${PROJECT_SOURCE_DIR}/include/GateType.hpp
+  ${PROJECT_SOURCE_DIR}/include/QGate.hpp
+  ${PROJECT_SOURCE_DIR}/include/QCircuit.hpp
+  QCircuit.cpp
+  QGate.cpp
+  parsers/ParseQASM.cpp
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)

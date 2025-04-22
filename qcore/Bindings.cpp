@@ -10,8 +10,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "qcircuit.hpp"
-#include "qgate.hpp"
+#include "QCircuit.hpp"
+#include "QGate.hpp"
 
 
 

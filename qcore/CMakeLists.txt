@@ -15,6 +15,6 @@ target_link_libraries(${PROJECT_NAME}_python INTERFACE ${PROJECT_NAME} pybind11:
 
 
 # add pyqcore module
-pybind11_add_module(py${PROJECT_NAME} bindings.cpp)                                                       
+pybind11_add_module(py${PROJECT_NAME} Bindings.cpp)                                                       
 target_link_libraries(py${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_python ${PROJECT_NAME})
 target_compile_definitions(py${PROJECT_NAME} PRIVATE VERSION_INFO=${QCORE_VERSION_INFO})

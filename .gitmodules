@@ -1,9 +1,12 @@
 [submodule "extern/json"]
 	path = extern/json
 	url = https://github.com/nlohmann/json.git
+    ignore = dirty
 [submodule "extern/pybind11"]
 	path = extern/pybind11
 	url = https://github.com/pybind/pybind11.git
+    ignore = dirty
 [submodule "extern/pybind11_json"]
 	path = extern/pybind11_json
 	url = https://github.com/pybind/pybind11_json.git
+    ignore = dirty

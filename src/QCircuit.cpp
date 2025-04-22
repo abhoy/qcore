@@ -1,13 +1,33 @@
 /*
-======================================================
-Author: Abhoy Kole
-Created: 10th July, 2014
-Last Modified: 2nd February, 2022
-Purpose: Reversible and Quantum Circuit Instance Description
-======================================================
-*/
+ * This file is part of the core quantum library package.
+ *
+ * Developed for the Deutsches Forschungszentrum für Künstliche 
+ * Intelligenz GmbH (DFKI), Cyber-Physical Systems Dept.
+ *
+ * This program is free software: you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation, either version 
+ * 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public 
+ * License along with this program. If not, see 
+ * <https://www.gnu.org/licenses/>.
+ */
 
-#include "qcircuit.hpp"
+/** 
+ *  @file   QCircuit.cpp
+ *  @brief  Instance Description for Quantum Circuit
+ *  @author Abhoy Kole 
+ *  @date   02.02.2022 
+ ***********************************************************/
+
+
+#include "QCircuit.hpp"
 
 namespace qcore {
 
