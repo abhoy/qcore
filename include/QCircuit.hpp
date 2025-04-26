@@ -59,6 +59,8 @@ class QCircuit {
 
     QCircuit(const QCircuit& ckt);
 
+    QCircuit(const Qubit& qbit, const Cbit& cbit);
+
     QCircuit& operator=(const QCircuit& ckt);
 
     ~QCircuit();
@@ -80,6 +82,8 @@ class QCircuit {
     std::string operator[](const FileFormat& format);
     
     Qubit addQubit(Qubit& qubit);
+
+    void addQGate(QGatePtr& gate);
 
     Cbit addCbit(Cbit& cbit);
 

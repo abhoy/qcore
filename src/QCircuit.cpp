@@ -65,6 +65,10 @@ Cbit QCircuit::addCbit(Cbit& cbit) {
     return cbit;
 }
 
+void QCircuit::addQGate(QGatePtr& gate){
+    this->gates.push_back(gate);
+}
+
 FileFormat QCircuit::writeQCircuit(const std::string& filename) {
     const std::size_t dot = filename.find_last_of('.');
 
