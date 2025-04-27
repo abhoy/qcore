@@ -46,6 +46,7 @@ using line_t = Qubit;  // for backward compitable
 
 // register size
 using regsize_t = std::uint64_t;
+using gsize_t = std::uint32_t;
 
 // Type for classical bit
 using Cbit = std::uint32_t;

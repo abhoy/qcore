@@ -41,7 +41,7 @@ bool QGateCompare::operator()(const QGate &lhs, const QGate &rhs) {
     return lhs.getId() < rhs.getId();
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -55,7 +55,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const TargetSet &
     this->cbits = CbitSet{};
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cbits, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const CbitSet &cbits, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -69,7 +69,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cb
     this->cbits = cbits;
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const RotationMap &angles, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const RotationMap &angles, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -83,7 +83,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const RotationMap
     this->cbits = CbitSet{};
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cbits, const RotationMap &angles, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const CbitSet &cbits, const RotationMap &angles, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -97,7 +97,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cb
     this->cbits = cbits;
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const ControlSet &controls, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const ControlSet &controls, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -111,7 +111,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const ControlSet 
     this->cbits = CbitSet{};
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cbits, const ControlSet &controls, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const CbitSet &cbits, const ControlSet &controls, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -125,7 +125,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cb
     this->cbits = cbits;
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const RotationMap &angles, const ControlSet &controls, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const RotationMap &angles, const ControlSet &controls, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }
@@ -139,7 +139,7 @@ QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const RotationMap
     this->cbits = CbitSet{};
 }
 
-QGate::QGate(const gate_t &gate_type, const size_t &gate_size, const CbitSet &cbits, const RotationMap &angles, const ControlSet &controls, const TargetSet &targets) {
+QGate::QGate(const gate_t &gate_type, gsize_t gate_size, const CbitSet &cbits, const RotationMap &angles, const ControlSet &controls, const TargetSet &targets) {
     if (controls.size() + targets.size() != gate_size) {
         throw QcoreException("[QGate] instantiation error msg: Gate size mismatch");
     }

@@ -48,7 +48,7 @@ class QCircuit {
     regsize_t creg;
     QubitSet qubits;
     CbitSet cbits;
-    size_t max_gate_size;
+    gsize_t max_gate_size;
     QGateSet gates;
 
     QubitDepthMap depth;
@@ -57,13 +57,13 @@ class QCircuit {
    public:
     QCircuit();
 
-    QCircuit(const QCircuit& ckt);
+    QCircuit(const QCircuit& ckt); //= delete;
 
-    QCircuit(const Qubit& qbit, const Cbit& cbit);
+    QCircuit(regsize_t qreg, regsize_t creg);
 
-    QCircuit& operator=(const QCircuit& ckt);
+    QCircuit& operator=(const QCircuit& ckt);// = delete;
 
-    ~QCircuit();
+    ~QCircuit();// = default;
 
     void init();
 
@@ -83,7 +83,9 @@ class QCircuit {
     
     Qubit addQubit(Qubit& qubit);
 
-    void addQGate(QGatePtr& gate);
+    void addQGate(QGate& gate);
+
+    void addQGate(QGate gate);
 
     Cbit addCbit(Cbit& cbit);
 
@@ -107,7 +109,7 @@ class QCircuit {
         return this->creg;
     }
 
-    inline size_t& getMaxGateSize() {
+    inline gsize_t& getMaxGateSize() {
         return this->max_gate_size;
     }
     
@@ -137,9 +139,6 @@ class QCircuit {
     unsigned maxCNOTDepth();
     void reduceCNOTDepth(QGate& g);
     unsigned twoQubitGateCount(unsigned pos);
-
-    void addQGate(QGate&);
-    void addQGate(QGate);
     void clear();*/
     friend void exchangeQubits(QubitSet& qubits, int i, int j);
 };

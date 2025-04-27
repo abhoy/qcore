@@ -50,7 +50,7 @@ class QGate {
     static std::uint64_t gate_count;
     gateid_t gate_id;
     gate_t gate_type;
-    size_t gate_size;
+    gsize_t gate_size;
     ControlSet controls{};
     TargetSet targets{};
     RotationMap angles{};
@@ -63,31 +63,31 @@ class QGate {
 
     QGate &operator=(const QGate &);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const CbitSet &cbits, const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const RotationMap &angles, const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const CbitSet &cbits, const RotationMap &angles, 
           const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const ControlSet &controls, const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const CbitSet &cbits, const ControlSet &controls, 
           const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const RotationMap &angles, const ControlSet &controls,
           const TargetSet &targets);
 
-    QGate(const gate_t &gate_type, const size_t &gate_size,
+    QGate(const gate_t &gate_type, gsize_t gate_size,
           const CbitSet &cbits, const RotationMap &angles, 
           const ControlSet &controls, const TargetSet &targets);
 

@@ -65,8 +65,12 @@ Cbit QCircuit::addCbit(Cbit& cbit) {
     return cbit;
 }
 
-void QCircuit::addQGate(QGatePtr& gate){
-    this->gates.push_back(gate);
+void QCircuit::addQGate(QGate& gate){
+    this->gates.push_back(std::make_unique<QGate>(gate));
+}
+
+void QCircuit::addQGate(QGate gate){
+    this->gates.push_back(std::make_unique<QGate>(gate));
 }
 
 FileFormat QCircuit::writeQCircuit(const std::string& filename) {
@@ -141,6 +145,12 @@ QCircuit& QCircuit::operator=(const QCircuit& ckt) {
 
 QCircuit::QCircuit(const QCircuit& ckt) {
     clone(ckt);
+}
+
+QCircuit::QCircuit(regsize_t qreg, regsize_t creg){
+    init();
+    this->qreg = qreg;
+    this->creg = creg;
 }
 
 QCircuit::QCircuit() {
