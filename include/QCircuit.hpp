@@ -1,12 +1,12 @@
 /*
  * This file is part of the core quantum library package.
  *
- * Developed for the Deutsches Forschungszentrum für Künstliche 
+ * Developed for the Deutsches Forschungszentrum für Künstliche
  * Intelligenz GmbH (DFKI), Cyber-Physical Systems Dept.
  *
- * This program is free software: you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License 
- * as published by the Free Software Foundation, either version 
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version
  * 3 of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,16 +14,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public 
- * License along with this program. If not, see 
+ * You should have received a copy of the GNU General Public
+ * License along with this program. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
-/** 
+/**
  *  @file   QCircuit.hpp
  *  @brief  Specification of Quantum Circuit
- *  @author Abhoy Kole 
- *  @date   02.02.2022 
+ *  @author Abhoy Kole
+ *  @date   02.02.2022
  ***********************************************************/
 
 #pragma once
@@ -57,13 +57,13 @@ class QCircuit {
    public:
     QCircuit();
 
-    QCircuit(const QCircuit& ckt); //= delete;
+    QCircuit(const QCircuit& ckt);  //= delete;
 
     QCircuit(regsize_t qreg, regsize_t creg);
 
-    QCircuit& operator=(const QCircuit& ckt);// = delete;
+    QCircuit& operator=(const QCircuit& ckt);  // = delete;
 
-    ~QCircuit();// = default;
+    ~QCircuit();  // = default;
 
     void init();
 
@@ -80,19 +80,50 @@ class QCircuit {
     std::string toString(const FileFormat& format);
 
     std::string operator[](const FileFormat& format);
-    
+
     Qubit addQubit(Qubit& qubit);
 
-    void addQGate(QGate& gate);
+    //void addQGate(QGate& gate);
 
     void addQGate(QGate gate);
 
+    /** @brief Merging two quantum circuits and their qubits
+     *
+     *
+     *  @param qc The quantum circuit to be appended
+     *  @param qubits The set of qubits to be merged (Default = empty set)
+     */
+    void addQCircuit(QCircuit& qc, QubitSet& qubits);
+
+    /** @brief Merging two quantum circuits
+     *
+     *
+     *  @param qc The quantum circuit to be appended
+     */
+    void addQCircuit(QCircuit& qc);
+
+    /** @brief Finding the inverse of the current quantum circuit
+     *
+     *
+     *  @return The inverse quantum circuit
+     */
+    QCircuit& inverse();
+
     Cbit addCbit(Cbit& cbit);
+
+    inline void setQubits(const QubitSet& qubits) {
+        this->qubits = qubits;
+        this->qreg = qubits.size();
+    }
+
+    inline void setQreg(register_t qreg) {
+        this->qreg = qreg;
+    }
 
     inline QGateSet& getGates() {
         return this->gates;
     }
-    
+
     inline QubitSet& getQubits() {
         return this->qubits;
     }
@@ -112,9 +143,9 @@ class QCircuit {
     inline gsize_t& getMaxGateSize() {
         return this->max_gate_size;
     }
-    
-    depth_t getDepth(); 
-    
+
+    depth_t getDepth();
+
     inline PropertiesMap& getProperties() {
         return this->properties;
     }
@@ -129,7 +160,7 @@ class QCircuit {
 
     void displayQASM(std::ostream& os, unsigned size);
     void displayQisKit(std::ostream& os, unsigned size);
-    
+
     MeasuredQubitMap getMeasures();
     void setGates(QGateSet& gates);
     void setQubits(QubitSet& qubits);
@@ -142,5 +173,29 @@ class QCircuit {
     void clear();*/
     friend void exchangeQubits(QubitSet& qubits, int i, int j);
 };
+
+/** @brief merging qubits from multiple sources eleminating duplicates.
+ *
+ *
+ *  @param qbit_sets the set of qubit sets
+ *  @return the set of qubits
+ */
+QubitSet &mergeQubits(const std::vector<QubitSet> &qbit_sets);
+
+/** @brief moving qubits from sources to destination eliminating duplicates.
+ *
+ *
+ *  @param dest the destination set of qubits 
+ *  @param src the source set of qubits
+ */
+void moveQubits(QubitSet &dest, QubitSet &src);
+
+/** @brief moving quantum gates from source to destination.
+ *
+ *
+ *  @param dest the destination set of quantum gate 
+ *  @param src the source set of quantum gates
+ */
+void moveQGates(QGateSet &dest, QGateSet &src);
 
 }  // namespace qcore

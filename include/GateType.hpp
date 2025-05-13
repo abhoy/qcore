@@ -41,24 +41,29 @@ Purpose: Reversible and Quantum GATE Instance Description
 
 namespace qcore {
 
-/*
-Reversible and Quantum Gate Types:
-Classical Gates:
-    Pauli X, Controlled Pauli X (CX), Toffoli (CCX), Multiple Controlled Toffoli (MCX), SWAP
-Phase Gates:
-    Pauli Z, sqrt of Z (S), inverse of S (SDG), sqrt of S (T), inverse of T (TDG), Phase (P),
-    Rotation around Z axix (RZ)
-Non-unitory Gates:
-    active reset(RESET), measurement (MESURE), classical controlled operation (IF), BARRIER
-Hadamard Gate:
-    H
-Quantum Gates:
-    Y, Rotation around X and Y axix (RX and RY), sqrt of X (SX), inverse of SX (SXDG),
-    Rotation around XX axix (RXX), Rotation around ZZ axis (RZZ), Margolus gate (RCCX),
-    Relative phase 3 controlled Toffoli gate (RC3X)
-Special unitaries from IBM:
-    U1, U2, U3 and U
-*/
+
+/**
+ * @brief Reversible and Quantum Gate Types:
+ * 
+ * @details 
+ *  Classical Gates:
+ *      Pauli X, Controlled Pauli X (CX), Toffoli (CCX), Multiple Controlled Toffoli (MCX), SWAP, CSWAP
+ *  Phase Gates:
+ *      Pauli Z, sqrt of Z (S), inverse of S (SDG), sqrt of S (T), inverse of T (TDG), Phase (P), Rotation around Z axix (RZ)
+ *  Non-unitory Gates:
+ *      Active reset(RESET), measurement (MESURE), classical controlled operation (IF), BARRIER
+ *  Hadamard Gate:
+ *      H
+ * Quantum Gates:
+ *      Y, Rotation around X and Y axix (RX and RY), sqrt of X (SX), inverse of SX (SXDG), Rotation around XX axix (RXX), 
+ *      Rotation around ZZ axis (RZZ), ISWAP 
+ * Special Relative phase 3-qubit Toffoli Gate: 
+ *      Margolus gate (RCCX), SRCCX, SRCCXDG,SSRCCX, SSRCCXDG
+ * Special Relative phase 4-qubit Toffoli Gate:
+ *      RC3X, SRC3X, SRC3XDG
+ * Special unitaries from IBM:
+ *      U1, U2, U3 and U
+ */
 
 enum GateType : std::uint8_t {  // Gate Type
     NONE,
@@ -72,7 +77,14 @@ enum GateType : std::uint8_t {  // Gate Type
     CRX,
     RXX,
     RCCX,
+    SRCCX,
+    SRCCXDG,
+    SSRCCX,
+    SSRCCXDG,
     RC3X,
+    SRC3X,
+    SRC3XDG,
+
     V,
     CV,
     VDG,
@@ -193,8 +205,20 @@ inline std::string toString(const gate_t& gateType) {
             return "rxx";
         case GateType::RCCX:
             return "rccx";
+        case GateType::SRCCX:
+            return "srccx";
+        case GateType::SRCCXDG:
+            return "srccxdg";
+        case GateType::SSRCCX:
+            return "ssrccx";
+        case GateType::SSRCCXDG:
+            return "ssrccxdg";           
         case GateType::RC3X:
             return "rc3x";
+        case GateType::SRC3X:
+            return "src3x";
+        case GateType::SRC3XDG:
+            return "src3xdg";
         case GateType::V:
             return "v";
         case GateType::CV:
@@ -292,6 +316,109 @@ inline std::string toString(const gate_t& gateType) {
     }
 }
 
+/**
+ * @brief Ontaining the inverse of a given quantum gate type
+ * 
+ * @param gateType The gateType identifier for the given quantum gate type  
+ * @return gate_t The inverse quantum gate type
+ */
+inline gate_t inverseGateType(const gate_t& gateType) {
+    switch (gateType) {
+        case GateType::SRCCX:
+            return GateType::SRCCXDG;
+        case GateType::SRCCXDG:
+            return GateType::SRCCX;
+        case GateType::SSRCCX:
+            return GateType::SSRCCXDG;
+        case GateType::SSRCCXDG:
+            return GateType::SSRCCX;
+        case GateType::SRC3X:
+            return GateType::SRC3XDG;
+        case GateType::SRC3XDG:
+            return GateType::SRC3X;
+        case GateType::V:
+            return GateType::VDG;
+        case GateType::CV:
+            return GateType::CVDG;
+        case GateType::VDG:
+            return GateType::V;
+        case GateType::CVDG:
+            return GateType::CV;    
+        case GateType::SX:
+            return GateType::SXDG;
+        case GateType::CSX:
+            return GateType::CSXDG;
+        case GateType::SXDG:
+            return GateType::SX;
+        case GateType::CSXDG:
+            return GateType::CSX;
+        case GateType::S:
+            return GateType::SDG;
+        case GateType::CS:
+            return GateType::CSDG;
+        case GateType::SDG:
+            return GateType::S;
+        case GateType::CSDG:
+            return GateType::CS;
+        case GateType::T:
+            return GateType::TDG;
+        case GateType::CT:
+            return GateType::CTDG;
+        case GateType::TDG:
+            return GateType::T;
+        case GateType::CTDG:
+            return GateType::CT;
+        case GateType::PERES:
+            return GateType::PERESDG;
+        case GateType::PERESDG:
+            return GateType::PERES;
+        
+        //Self Inverse
+        case GateType::NONE:
+        case GateType::I:
+        case GateType::X:
+        case GateType::CX:
+        case GateType::CCX:
+        case GateType::MCX:
+        case GateType::RX:
+        case GateType::CRX:
+        case GateType::RXX:
+        case GateType::RCCX:
+        case GateType::RC3X:
+        case GateType::Y:
+        case GateType::CY:
+        case GateType::RY:
+        case GateType::CRY:
+        case GateType::Z:
+        case GateType::CZ:
+        case GateType::P:
+        case GateType::CP:
+        case GateType::RZ:
+        case GateType::CRZ:
+        case GateType::RZZ:
+        case GateType::H:
+        case GateType::CH:
+        case GateType::U1:
+        case GateType::CU1:
+        case GateType::U2:
+        case GateType::CU2:
+        case GateType::U3:
+        case GateType::CU3:
+        case GateType::U:
+        case GateType::CU:
+        case GateType::SWAP:
+        case GateType::CSWAP:
+        case GateType::ISWAP:
+        case GateType::RESET:
+        case GateType::MEASURE:
+        case GateType::IF:
+        case GateType::BARRIER:
+            return gateType;
+        default:
+            throw std::invalid_argument("Invalid OpType!");
+    }
+}
+
 inline gate_t gateTypeFromString(const std::string& gateType) {
     if (gateType == "none" || gateType == "0") {
         return GateType::NONE;
@@ -323,145 +450,163 @@ inline gate_t gateTypeFromString(const std::string& gateType) {
     if (gateType == "rccx" || gateType == "9") {
         return GateType::RCCX;
     }
-    if (gateType == "rc3x" || gateType == "10") {
+    if (gateType == "srccx" || gateType == "10") {
+        return GateType::SRCCX;
+    }
+    if (gateType == "srccxdg" || gateType == "11") {
+        return GateType::SRCCXDG;
+    }
+    if (gateType == "ssrccx" || gateType == "12") {
+        return GateType::SSRCCX;
+    }
+    if (gateType == "ssrccxdg" || gateType == "13") {
+        return GateType::SSRCCXDG;
+    }
+    if (gateType == "rc3x" || gateType == "14") {
         return GateType::RC3X;
     }
-    if (gateType == "v" || gateType == "11") {
+    if (gateType == "src3x" || gateType == "15") {
+        return GateType::SRC3X;
+    }
+    if (gateType == "src3xdg" || gateType == "16") {
+        return GateType::SRC3XDG;
+    }
+    if (gateType == "v" || gateType == "17") {
         return GateType::V;
     }
-    if (gateType == "cv" || gateType == "12") {
+    if (gateType == "cv" || gateType == "18") {
         return GateType::CV;
     }
-    if (gateType == "vdg" || gateType == "13") {
+    if (gateType == "vdg" || gateType == "19") {
         return GateType::VDG;
     }
-    if (gateType == "cvdg" || gateType == "14") {
+    if (gateType == "cvdg" || gateType == "20") {
         return GateType::CVDG;
     }
-    if (gateType == "sx" || gateType == "15") {
+    if (gateType == "sx" || gateType == "21") {
         return GateType::SX;
     }
-    if (gateType == "csx" || gateType == "16") {
+    if (gateType == "csx" || gateType == "22") {
         return GateType::CSX;
     }
-    if (gateType == "sxdg" || gateType == "17") {
+    if (gateType == "sxdg" || gateType == "23") {
         return GateType::SXDG;
     }
-    if (gateType == "csxdg" || gateType == "18") {
+    if (gateType == "csxdg" || gateType == "24") {
         return GateType::CSXDG;
     }
-    if (gateType == "y" || gateType == "19") {
+    if (gateType == "y" || gateType == "25") {
         return GateType::Y;
     }
-    if (gateType == "cy" || gateType == "20") {
+    if (gateType == "cy" || gateType == "26") {
         return GateType::CY;
     }
-    if (gateType == "ry" || gateType == "21") {
+    if (gateType == "ry" || gateType == "27") {
         return GateType::RY;
     }
-    if (gateType == "cry" || gateType == "22") {
+    if (gateType == "cry" || gateType == "28") {
         return GateType::CRY;
     }
-    if (gateType == "z" || gateType == "23") {
+    if (gateType == "z" || gateType == "29") {
         return GateType::Z;
     }
-    if (gateType == "cz" || gateType == "24") {
+    if (gateType == "cz" || gateType == "30") {
         return GateType::CZ;
     }
-    if (gateType == "s" || gateType == "25") {
+    if (gateType == "s" || gateType == "31") {
         return GateType::S;
     }
-    if (gateType == "cs" || gateType == "26") {
+    if (gateType == "cs" || gateType == "32") {
         return GateType::CS;
     }
-    if (gateType == "sdg" || gateType == "27") {
+    if (gateType == "sdg" || gateType == "33") {
         return GateType::SDG;
     }
-    if (gateType == "csdg" || gateType == "28") {
+    if (gateType == "csdg" || gateType == "34") {
         return GateType::CSDG;
     }
-    if (gateType == "t" || gateType == "29") {
+    if (gateType == "t" || gateType == "35") {
         return GateType::T;
     }
-    if (gateType == "ct" || gateType == "30") {
+    if (gateType == "ct" || gateType == "36") {
         return GateType::CT;
     }
-    if (gateType == "tdg" || gateType == "31") {
+    if (gateType == "tdg" || gateType == "37") {
         return GateType::TDG;
     }
-    if (gateType == "ctdg" || gateType == "32") {
+    if (gateType == "ctdg" || gateType == "38") {
         return GateType::CTDG;
     }
-    if (gateType == "p" || gateType == "33") {
+    if (gateType == "p" || gateType == "39") {
         return GateType::P;
     }
-    if (gateType == "cp" || gateType == "34") {
+    if (gateType == "cp" || gateType == "40") {
         return GateType::CP;
     }
-    if (gateType == "rz" || gateType == "35") {
+    if (gateType == "rz" || gateType == "42") {
         return GateType::RZ;
     }
-    if (gateType == "crz" || gateType == "36") {
+    if (gateType == "crz" || gateType == "42") {
         return GateType::CRZ;
     }
-    if (gateType == "rzz" || gateType == "37") {
+    if (gateType == "rzz" || gateType == "43") {
         return GateType::RZZ;
     }
-    if (gateType == "h" || gateType == "38") {
+    if (gateType == "h" || gateType == "44") {
         return GateType::H;
     }
-    if (gateType == "ch" || gateType == "39") {
+    if (gateType == "ch" || gateType == "45") {
         return GateType::CH;
     }
-    if (gateType == "u1" || gateType == "40") {
+    if (gateType == "u1" || gateType == "46") {
         return GateType::U1;
     }
-    if (gateType == "cu1" || gateType == "41") {
+    if (gateType == "cu1" || gateType == "47") {
         return GateType::CU1;
     }
-    if (gateType == "u2" || gateType == "42") {
+    if (gateType == "u2" || gateType == "48") {
         return GateType::U2;
     }
-    if (gateType == "cu2" || gateType == "43") {
+    if (gateType == "cu2" || gateType == "49") {
         return GateType::CU2;
     }
-    if (gateType == "u3" || gateType == "44") {
+    if (gateType == "u3" || gateType == "50") {
         return GateType::U3;
     }
-    if (gateType == "cu3" || gateType == "45") {
+    if (gateType == "cu3" || gateType == "51") {
         return GateType::CU3;
     }
-    if (gateType == "u" || gateType == "46") {
+    if (gateType == "u" || gateType == "52") {
         return GateType::U;
     }
-    if (gateType == "cu" || gateType == "47") {
+    if (gateType == "cu" || gateType == "53") {
         return GateType::CU;
     }
-    if (gateType == "peres" || gateType == "48") {
+    if (gateType == "peres" || gateType == "54") {
         return GateType::PERES;
     }
-    if (gateType == "peresdg" || gateType == "49") {
+    if (gateType == "peresdg" || gateType == "55") {
         return GateType::PERESDG;
     }
-    if (gateType == "swap" || gateType == "50") {
+    if (gateType == "swap" || gateType == "56") {
         return GateType::SWAP;
     }
-    if (gateType == "cswap" || gateType == "51") {
+    if (gateType == "cswap" || gateType == "57") {
         return GateType::CSWAP;
     }
-    if (gateType == "iswap" || gateType == "52") {
+    if (gateType == "iswap" || gateType == "58") {
         return GateType::ISWAP;
     }
-    if (gateType == "reset" || gateType == "53") {
+    if (gateType == "reset" || gateType == "59") {
         return GateType::RESET;
     }
-    if (gateType == "measure" || gateType == "54") {
+    if (gateType == "measure" || gateType == "60") {
         return GateType::MEASURE;
     }
-    if (gateType == "if" || gateType == "55") {
+    if (gateType == "if" || gateType == "61") {
         return GateType::IF;
     }
-    if (gateType == "barrier" || gateType == "56") {
+    if (gateType == "barrier" || gateType == "62") {
         return GateType::BARRIER;
     }
     throw std::invalid_argument("Unknown operation type: " + gateType);

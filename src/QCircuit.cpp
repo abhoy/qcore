@@ -65,12 +65,34 @@ Cbit QCircuit::addCbit(Cbit& cbit) {
     return cbit;
 }
 
-void QCircuit::addQGate(QGate& gate){
+/*void QCircuit::addQGate(QGate& gate){
     this->gates.push_back(std::make_unique<QGate>(gate));
-}
+}*/
 
 void QCircuit::addQGate(QGate gate){
     this->gates.push_back(std::make_unique<QGate>(gate));
+}
+
+void QCircuit::addQCircuit(QCircuit& qc, QubitSet& qubits){
+    
+    addQCircuit(qc);
+
+    if (qubits.size() != 0){
+        moveQubits(this->qubits, qubits);
+    }
+}
+
+void QCircuit::addQCircuit(QCircuit& qc){
+    moveQGates(this->gates, qc.gates);
+}
+
+QCircuit& QCircuit::inverse(){
+    auto qc = QCircuit{};
+    qc.setQubits(this->qubits);
+    qc.gates.reserve(this->gates.size());
+    for (auto i = this->gates.rbegin(); i != this->gates.rend(); ++i){
+        qc.addQGate(static_cast<QGate&>(**i).inverse());
+    }
 }
 
 FileFormat QCircuit::writeQCircuit(const std::string& filename) {
@@ -189,5 +211,46 @@ void exchangeQubits(QubitSet& qubits, int i, int j) {
     Qubit qubit = qubits[i];
     qubits[i] = qubits[j];
     qubits[j] = qubit;
+}
+
+QubitSet& mergeQubits(const std::vector<QubitSet>& q_sets) {
+    size_t total_size = 0;
+    for (const auto& q_set : q_sets) {
+        total_size = q_set.size();
+    }
+    QubitSet qubits{};
+    qubits.reserve(total_size);
+    for (const auto& q_set : q_sets) {
+        qubits.insert(qubits.end(), q_set.begin(), q_set.end());
+    }
+    //removing duplicates
+    std::sort(qubits.begin(), qubits.end());
+    qubits.erase(std::unique(qubits.begin(), qubits.end()), qubits.end());
+    //auto it = std::unique(qubits.begin(), qubits.end());
+    
+    /*
+    // checking for duplicate qubits
+    if (it != qubits.end()) {
+        std::string duplicates = std::to_string(*it);
+        while (++it != qubits.end()) {
+            duplicates += ", " + std::to_string(*it);
+        }
+        throw QcoreException("[merge qubits] q:" + duplicates + " msg: found duplicate qubits ");
+    }*/
+    return qubits;
+}
+
+void moveQubits(QubitSet &dest, QubitSet &src){
+    dest.reserve(dest.size() + src.size());
+    std::move(src.begin(), src.end(), std::back_inserter(dest));
+
+    //removing duplicates
+    std::sort(dest.begin(), dest.end());
+    dest.erase(std::unique(dest.begin(), dest.end()), dest.end());
+}
+
+void moveQGates(QGateSet& dest, QGateSet& src) {
+    dest.reserve(dest.size() + src.size());
+    std::move(std::make_move_iterator(src.begin()), std::make_move_iterator(src.end()), std::back_inserter(dest));
 }
 }  // namespace qcore

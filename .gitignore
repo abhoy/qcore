@@ -3,3 +3,5 @@ build
 dist
 qcore.egg-info
 pyqcore.*
+include/decompose/Decompose.hpp
+src/decompose/Decompose.cpp

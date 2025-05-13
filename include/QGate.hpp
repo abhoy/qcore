@@ -33,18 +33,26 @@
 
 namespace qcore {
 
-// To compare two gates from a circuit
+
+
+/**
+ * @brief To compare two quantum gates for distinguising them
+ * 
+ */
 struct QGateCompare {
     bool operator()(const QGate &lhs, const QGate &rhs);
 };
 
-/*
-Type for Quantum Gate composing
-    1. set of control qubits
-    2. set of target qubits
-    3. type of gate
-    4. rotation angle, theta, phi, lambda
-*/
+
+/**
+ * @brief Class for representing quantum gate
+ * 
+ * @details Type for Quantum Gate composing
+ *     1. set of control qubits
+ *     2. set of target qubits
+ *     3. type of gate
+ *     4. rotation angle, theta, phi, lambda
+ */
 class QGate {
    private:
     static std::uint64_t gate_count;
@@ -59,10 +67,28 @@ class QGate {
     expression_t expression{};
 
    public:
-    QGate(const QGate &);
+   /**
+    * @brief Construct a new quantum gate from an existing one
+    * 
+    * @param gate The existing quantum gate 
+    */
+    QGate(const QGate & gate);
 
-    QGate &operator=(const QGate &);
+    /**
+     * @brief Create duplicate of an existing quantum gate  
+     * 
+     * @param gate The existing quantum gate
+     * @return QGate& The refernece of created duplicate quantum gate
+     */
+    QGate &operator=(const QGate &gate);
 
+    /**
+     * @brief Construct a new QGate object
+     * 
+     * @param gate_type 
+     * @param gate_size 
+     * @param targets 
+     */
     QGate(const gate_t &gate_type, gsize_t gate_size,
           const TargetSet &targets);
 
@@ -90,6 +116,13 @@ class QGate {
     QGate(const gate_t &gate_type, gsize_t gate_size,
           const CbitSet &cbits, const RotationMap &angles, 
           const ControlSet &controls, const TargetSet &targets);
+
+    /** @brief Finding the inverse of a given quantum gate
+     *
+     *
+     *  @return The inverse quantum gate
+     */
+    QGate& inverse();
 
     std::string toOpenQASM();
 
@@ -127,5 +160,6 @@ class QGate {
     void updateBits(const TargetSet &targets);
 
     void updateBits(const CbitSet &cbits, const TargetSet &targets);
+
 };
 }  // namespace qcore

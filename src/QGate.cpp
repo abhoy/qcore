@@ -164,6 +164,13 @@ QGate::QGate(const QGate &g) {
     this->cbits = g.cbits;
 }
 
+QGate& QGate::inverse(){
+    auto gate = QGate{*this}; 
+    gate.gate_type = inverseGateType(gate.gate_type);
+    //Rotations and other parameterized gates need to be specified
+    return gate;
+}
+
 QGate &QGate::operator=(const QGate &g) {
     this->gate_id = g.gate_id;
     this->gate_type = g.gate_type;

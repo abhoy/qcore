@@ -17,8 +17,10 @@ add_library(
   ${PROJECT_SOURCE_DIR}/include/GateType.hpp
   ${PROJECT_SOURCE_DIR}/include/QGate.hpp
   ${PROJECT_SOURCE_DIR}/include/QCircuit.hpp
+  ${PROJECT_SOURCE_DIR}/include/decompose/Clifford_T.hpp
   QCircuit.cpp
   QGate.cpp
+  decompose/Clifford_T.cpp
   parsers/ParseQASM.cpp
 )
 
