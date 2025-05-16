@@ -147,7 +147,8 @@ void QCircuit::readQASM(std::istream& is) {
                 throw QcoreException("[readQASM] l:" + std::to_string(line) + " msg: Failed to read gate");
             }
 
-            version_t version = std::stod(std::regex_replace(nextToken, std::regex("^.*([0-9]*\\.[0-9]*).*$"), "$1"));
+            // bug fixed by lokr: '*' to '+'
+            version_t version = std::stod(std::regex_replace(nextToken, std::regex("^.*([0-9]+\\.[0-9]+).*$"), "$1"));
 
             if (version > 2.0) {
                 throw QcoreException("[readQASM] l:" + std::to_string(line) + " msg: Unsupported QASM version ");
