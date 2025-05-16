@@ -22,6 +22,7 @@ add_library(
   QGate.cpp
   decompose/Clifford_T.cpp
   parsers/ParseQASM.cpp
+  parsers/ParseQASM3.cpp
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)

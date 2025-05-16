@@ -77,6 +77,10 @@ class QCircuit {
 
     void writeQASM(std::ostream& os);
 
+    void readQASM3(std::istream& is);
+
+    void writeQASM3(std::ostream& os);
+
     std::string toString(const FileFormat& format);
 
     std::string operator[](const FileFormat& format);

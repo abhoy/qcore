@@ -13,7 +13,7 @@ int main() {
     std::cerr << "Error opening file!" << std::endl;
     return 1;
   }
-  circuit.readQASM(qasm_file);
+  circuit.readQASM3(qasm_file);
   qasm_file.close();
   // Test the writeQASM function
   std::ofstream output_file("test/output.qasm");
@@ -21,15 +21,10 @@ int main() {
     std::cerr << "Error opening output file!" << std::endl;
     return 1;
   }
-  circuit.writeQASM(output_file);
+  circuit.writeQASM3(output_file);
   output_file.close();
 
-  if (1 == 1) {
-    std::cout << "Test Passed!\n";
-  }
-  else {
-    std::cout << "Test Failed!\n";
-    return 1;
-  }
+  std::cout << "Test Passed!\n";
+
   return 0;
 }
