@@ -86,6 +86,12 @@ void QCircuit::addQCircuit(QCircuit& qc){
     moveQGates(this->gates, qc.gates);
 }
 
+void QCircuit::addQCircuit(const QCircuit& qc, int s, int e){
+    for (ConstantQGateIterator g = qc.gates.begin() + s; g + e != qc.gates.end(); ++g) {
+        this->gates.push_back(QGatePtr(new QGate(**g)));
+    }
+}
+
 QCircuit& QCircuit::inverse(){
     auto qc = QCircuit{};
     qc.setQubits(this->qubits);

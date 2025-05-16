@@ -202,7 +202,8 @@ QCircuit &decompose_MCT_Clifford_T(QubitSet &controls, Qubit target, QubitSet &d
 
     if (controls.size() == 2) {
         qc = decompose_CCX_Clifford_T(controls[0], controls[1], target);
-    } else {
+    } 
+    else {
         qcore::regsize_t ancilla_need = ((controls.size() - 2) / 2) + ((controls.size() - 2) % 2);
         if (clean.size() + dirty.size() < ancilla_need) {
             throw QcoreException("[decompose_MCT_Clifford_T] decomposition error msg: ancilla required (" + std::to_string(ancilla_need) + ") is higher than available (" + std::to_string(clean.size() + dirty.size()) + ").");
@@ -240,9 +241,41 @@ QCircuit &decompose_MCT_Clifford_T(QubitSet &controls, Qubit target, QubitSet &d
         auto qc_temp = qc; 
         //decompose using dirty ancilla
         if ((controls.size() - controls_covered) > 1){
+            auto p_daq = dirty[0];
+            auto qc2 = QCircuit{};
+            auto qc_temp2 = QCircuit{};
             for (auto &daq: dirty){
-
+                if (daq == dirty[0]){
+                    qc2.addQCircuit(decompose_SSRCCX_Clifford_T(controls[controls_covered], daq, target));
+                    controls_covered += 1; 
+                }
+                else if ((controls.size() - controls_covered) == 1 ){
+                    qc_temp2 = qc2;
+                    qc2.addQCircuit(decompose_RCCX_Clifford_T(p_caq, controls[controls_covered], p_daq));
+                    break;
+                }
+                else if ((controls.size() - controls_covered) == 2) {
+                    qc_temp2 = qc2;
+                    qc2.addQCircuit(decompose_RC3X_Clifford_T(p_caq, controls[controls_covered] , controls[controls_covered + 1], p_daq));
+                    break;
+                }
+                else if ((controls.size() - controls_covered) > 3) {
+                    qc2.addQCircuit(decompose_SRC3X_Clifford_T(daq, controls[controls_covered], controls[controls_covered + 1], p_daq));
+                    controls_covered += 2;
+                }
+                else if ((controls.size() - controls_covered) > 2) {
+                    qc2.addQCircuit(decompose_SRCCX_Clifford_T(daq, controls[controls_covered], p_daq));
+                    controls_covered += 2;
+                }
+                p_caq = daq;            
+                if ((controls.size() - controls_covered) == 0){
+                    break;
+                }    
             }
+            qc2.addQCircuit(qc_temp2.inverse());
+            auto qc_temp3 = qc2;
+            qc2.addQCircuit(qc_temp3, 1, 1);
+            
         }
         else{
             qc.addQCircuit(decompose_CCX_Clifford_T(p_caq, controls[controls_covered], target));

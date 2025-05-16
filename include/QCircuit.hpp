@@ -106,6 +106,15 @@ class QCircuit {
      */
     void addQCircuit(QCircuit& qc);
 
+    /** @brief Merging two quantum circuits
+     *
+     *
+     *  @param qc The quantum circuit to be appended
+     *  @param s The number of gates to be avoided from the begining  
+     *  @param e The number of gates to be avoided from the end
+     */
+    void addQCircuit(const QCircuit& qc, int s, int e);
+
     /** @brief Finding the inverse of the current quantum circuit
      *
      *
