@@ -69,7 +69,7 @@ QCircuit &decompose_RCCX_Clifford_T(Qubit &c1, Qubit &c2, Qubit &t);  // self in
  * 
  *  @param c1 The 1st control qubit
  *  @param c2 The 2nd control qubit
- *  @param t The target qubit
+ *  @param t The target qubit [V(c2,t)]
  *  @param inverse The inverse flag for performing inverse decompositon (Default False)
  *  @return Qcircuit& The decomposed 3-qubit quantum circuit realizing relative phase Toffoli operation using Clifford+T gates
  */
@@ -80,9 +80,9 @@ QCircuit &decompose_SRCCX_Clifford_T(Qubit &c1, Qubit &c2, Qubit &t, bool invers
  * @details Dmitri, Maslov. "On the advantages of using relative phase Toffolis with an application to
  *          multiple control Toffoli optimization." Phys. Rev. A 93 (2015). Equation. 3, dashed
  * 
- *  @param c1 The 1st control qubit
+ *  @param c1 The 1st control qubit    
  *  @param c2 The 2nd control qubit
- *  @param t The target qubit
+ *  @param t The target qubit [V(c1,t)]
  *  @param inverse The inverse flag for performing inverse decompositon (Default False)
  *  @return Qcircuit& The decomposed 3-qubit quantum circuit realizing relative phase Toffoli operation using Clifford+T gates
  */
@@ -109,7 +109,7 @@ QCircuit &decompose_RC3X_Clifford_T(Qubit &c1, Qubit &c2, Qubit &c3, Qubit &t); 
  *  @param c1 The 1st control qubit
  *  @param c2 The 2nd control qubit
  *  @param c3 The 3rd control qubit
- *  @param t The target qubit
+ *  @param t The target qubit [V(c2, c3, t)]
  *  @param inverse The inverse flag for performing inverse decompositon (Default False)
  *  @return Qcircuit& The decomposed 4-qubit quantum circuit realizing a 3-control relative phase Toffoli operation using Clifford+T gates
  */
