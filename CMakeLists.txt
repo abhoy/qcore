@@ -30,3 +30,7 @@ if(BINDINGS)
     add_subdirectory(qcore)
 endif()
 
+# add tests
+add_executable(test_main test/test_main.cpp)
+
+target_link_libraries(test_main PRIVATE ${PROJECT_NAME})
