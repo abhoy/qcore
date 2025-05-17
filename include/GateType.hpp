@@ -67,33 +67,42 @@ namespace qcore {
 
 enum GateType : std::uint8_t {  // Gate Type
     NONE,
-    // Standard operations
-    I,
-    X,
-    CX,
-    CCX,
-    MCX,
-    RX,
-    CRX,
-    RXX,
-    RCCX,
-    SRCCX,
-    SRCCXDG,
-    SSRCCX,
-    SSRCCXDG,
-    RC3X,
-    SRC3X,
-    SRC3XDG,
 
-    V,
-    CV,
-    VDG,
-    CVDG,
-    SX,
-    CSX,
-    SXDG,
-    CSXDG,
-    Y,
+    // Standard operations
+    I,          //Identity Gate
+    X,          //Inverter, NOT or  Pauli-X Gate
+    CX,         //Controlled-Pauli-X or Feynman Gate 
+    CCX,        //2-Controlled-Pauli-X or Toffoli Gate
+    MCX,        //Multi-Controlled-Pauli-X or Multi-Controlled-Toffoli Gate
+
+    //Quantum X-axis rotation and phase operations
+    RX,         //Rotation about the X-axis through angle θ 
+    CRX,        //Controlled-RX gate
+    RXX,        //Two-qubit rotation along the X-axis through a specified angle or XX-Ising Gate 
+    RCCX,       //Relative phase Toffoli or Margolus Gate 
+    SRCCX,      //Sub or parts of RCCX Gate: {RCCX(a, b, c) + V(b, c)}  
+    SRCCXDG,    //Inverse of SRCCX gate
+    SSRCCX,     //Type-{b} Special form of RCCX Gate: { RCCX(a, b, c) + V(a, c)}
+    SSRCCXDG,   //Inverse of SSRCCX Gate
+
+    /*To be implemented
+    LCCX,       //Logical AND Gate
+    LCCXDG,     //Inverse of LCCX Gate
+    */
+   
+    RC3X,       //3 Controlled relative phase X gate 
+    SRC3X,      //Sub or parts of RC3X Gate: {RC3X(a, b, c, d) + V(b, c, d)}
+    SRC3XDG,    //Inverse SRC3X Gate
+
+    V,          //Square-Root-of-Paule-X Gate
+    CV,         //Controlled-V Gate
+    VDG,        //Inverse of V Gate
+    CVDG,       //Congrolled-VDG Gate
+    SX,         //Same as V
+    CSX,        //Same as CV
+    SXDG,       //Same as VDG
+    CSXDG,      //Same as CVDG
+    Y,          
     CY,
     RY,
     CRY,
