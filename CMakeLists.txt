@@ -31,6 +31,35 @@ if(BINDINGS)
 endif()
 
 # add tests
-add_executable(test_main test/test_main.cpp)
+# GoogleTest requires at least C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-target_link_libraries(test_main PRIVATE ${PROJECT_NAME})
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(
+        parser_test
+        test/qasm3_parser_test.cpp
+)
+target_link_libraries(
+        parser_test
+        PRIVATE
+        GTest::gtest_main
+        ${PROJECT_NAME}
+)
+
+target_compile_definitions(parser_test PRIVATE
+        TEST_RESOURCES_DIR="${CMAKE_SOURCE_DIR}/test/test_resources"
+)
+
+include(GoogleTest)
+gtest_discover_tests(parser_test)

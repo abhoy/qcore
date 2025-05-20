@@ -9,21 +9,5 @@ src/decompose/Decompose.cpp
 .idea/
 .vscode
 
-# Build system files
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
-
-# src build artifacts
-src/CMakeFiles/
-src/Makefile
-src/cmake_install.cmake
-src/libqcore.so
-
-# External dependencies
-src/extern/
-
 # Test outputs and binaries
-test/output.qasm
-test_main
+test/test_resources/output.qasm
