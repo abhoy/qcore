@@ -102,40 +102,41 @@ enum GateType : std::uint8_t {  // Gate Type
     CSX,        //Same as CV
     SXDG,       //Same as VDG
     CSXDG,      //Same as CVDG
-    Y,          
-    CY,
-    RY,
-    CRY,
-    Z,
-    CZ,
-    S,
-    CS,
-    SDG,
-    CSDG,
-    T,
-    CT,
-    TDG,
-    CTDG,
-    P,
-    CP,
-    RZ,
-    CRZ,
-    RZZ,
-    H,
-    CH,
-    U1,
-    CU1,
-    U2,
-    CU2,
-    U3,
-    CU3,
-    U,
-    CU,
-    PERES,
-    PERESDG,
-    SWAP,
-    CSWAP,
-    ISWAP,
+    Y,          //Paule Y Gate
+    CY,         //Controlled-Y Gate 
+    RY,         //Rotation about the Y-axis through angle θ 
+    CRY,        //Controlled-RY gate
+    Z,          //Paule Z Gate
+    CZ,         //Controlled-Z Gate 
+    S,          //Square-Root-of-Paule-Z Gate
+    CS,         //Controlled-S Gate
+    SDG,        //Inverse of S Gate
+    CSDG,       //Controlled-SDG Gate
+    T,          //Square-Root-of-S Gate
+    CT,         //Controlled-T Gate
+    TDG,        //Inverse of T Gate
+    CTDG,       //Controlled-TDG Gate
+    P,          //Equivalent to RZ Gate (up to a phase factor, i.e. P(θ) = e^(iθ/2) RZ(θ), P(θ=π)=Z,  P(θ=π/2)=S, P(θ=π/4)=T)
+    CP,         //Controlled-P Gate 
+    RZ,         //Rotation about the Z-axis through angle θ 
+    CRZ,        //Controlled-RZ Gate  
+    RZZ,        //Two-qubit rotation along the Z-axis through a specified angle (maximally entangling at θ=π/2)
+    H,          //Hadamard Gate
+    CH,         //Controlled-H Gate  
+    U1,         //Similar to P Gate (a deprecated gate from IBM Qiskit, U1(θ) = P(θ) = U(0, 0, θ))
+    CU1,        //Controlled-U1 Gate  
+    U2,         //Single-qubit rotation about the (X + Z) axis (a deprecated gate from IBM Qiskit, U2(ϕ,λ) = U(π/2, ϕ, λ))
+    CU2,        //Controlled-U2 Gate  
+    U3,         //Generic single-qubit rotation Gate with 3 Euler angles (a deprecated gate from IBM Qiskit, U3(θ, ϕ, λ) = U(θ, ϕ, λ))
+    CU3,        //Controlled-U3 Gate
+    U,          //Similar to U3 Gate
+    CU,         //Controlled-U Gate
+    PERES,      //A 3-qubit quantum Gate (realizing: P(a, b, c) -> (a', b', c') such that a' = a, b' = a ⊕ b, c' = (a & b) ⊕ c)  
+    PERESDG,    //Inverse of PERES Gate
+    SWAP,       //A 2-qubit Gate for state exchange
+    CSWAP,      //Controlled-SWAP or Fredkin Gate
+    ISWAP,      //A 2-qubit XX + YY interaction: iSWAP = e^(iπ/4(X ⊗ X + Y ⊗ Y))
+    
     // Non-unitary operations
     RESET,
     MEASURE,
